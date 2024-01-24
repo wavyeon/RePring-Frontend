@@ -47,7 +47,7 @@ function App() {
         res.text();
       })
       .then((m) => setMessage(m));
-    fetch("/prac")
+    fetch("/test/prac")
       .then((res) => console.log(res));
   }, []);
   return <RouterProvider router={router} />;
