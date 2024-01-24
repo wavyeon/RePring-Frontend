@@ -41,13 +41,13 @@ const router = createBrowserRouter([
 function App() {
   const [message, setMessage] = useState("");
   useEffect(() => {
-    fetch("/test")
+    fetch("/home/test")
       .then((res) => {
         console.log(res);
         res.text();
       })
       .then((m) => setMessage(m));
-    fetch("/test/prac")
+    fetch("/home/prac")
       .then((res) => console.log(res));
   }, []);
   return <RouterProvider router={router} />;
