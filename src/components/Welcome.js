@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 
 export function Welcome() {
   const clickHandler = () => {
-    fetch("/prac")
-    .then((res) => console.log(res));
-    // .then((response) => response.json())
-    // .then((result) => console.log(result));
+    
   };
   return (
     <div className={classes.content}>

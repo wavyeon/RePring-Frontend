@@ -47,6 +47,8 @@ function App() {
         res.text();
       })
       .then((m) => setMessage(m));
+    fetch("/prac")
+      .then((res) => console.log(res));
   }, []);
   return <RouterProvider router={router} />;
 }
