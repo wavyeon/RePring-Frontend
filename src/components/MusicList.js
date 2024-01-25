@@ -26,7 +26,7 @@ export function MusicList() {
       try {
         const response = await axios({
           method: "GET",
-          url: "api/music",
+          url: "/api/music",
         })
         console.log(response.data);
         console.log(Object.values(response.data));
