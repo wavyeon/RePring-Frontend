@@ -34,15 +34,14 @@ export function MusicForm() {
       };
       const config = { "Content-Type": "application/json" };
       await axios.post(url, body, config);
-      // await axios({
-      //   method: "POST",
-      //   url: "/api/music",
-      //   body: {
-      //     title: data.title,
-      //     artist: data.artist,
-      //   },
-      //   headers: { "Content-Type": "application/json" },
-      // });
+      await axios({
+        method: "POST",
+        url: "/api/music",
+        body: {
+          title: data.title,
+          artist: data.artist,
+        },
+      });
       setTimeout(() => {
         navigate("/library");
       }, 1000);
