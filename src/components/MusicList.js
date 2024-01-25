@@ -25,7 +25,7 @@ export function MusicList() {
     const getMusicList = async () => {
       try {
         const response = await axios({
-          method: "GET",
+          method: "get",
           url: "/api/music",
         })
         console.log(response.data);
