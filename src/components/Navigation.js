@@ -4,7 +4,7 @@ import classes from "./Navigation.module.css";
 export function Navigation() {
   return (
     <header className={classes.header}>
-      <nav>
+      <nav className={classes.nav}>
         <ul className={classes.list}>
           <li>
             <NavLink to="/"

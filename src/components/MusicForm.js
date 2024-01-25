@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import classes from "./MusicForm.module.css";
 
 export function MusicForm() {
   const navigate = useNavigate();
@@ -13,19 +14,18 @@ export function MusicForm() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("submit")
     try {
       await axios({
         method: "post",
-        url: "https://react-http-f1077-default-rtdb.firebaseio.com/music.json",
+        url: "api/music",
         data: {
           title: data.title,
           artist: data.artist,
-          album: data.album,
-          id: data.id,
-          cover: data.cover,
+          // album: data.album,
+          // id: data.id,
+          // cover: data.cover,
         },
-        config: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" },
       });
       setTimeout(() => {
         navigate("/library");
@@ -36,15 +36,17 @@ export function MusicForm() {
   };
 
   return (
-    <>
-      <form encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" {...register("title", { required: true })} />
-        <input type="text" {...register("artist", { required: true })} />
-        <input type="text" {...register("album", { required: true })} />
+    <div className={classes.main}>
+      <div className={classes.form}>
+        <form encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
+          <input type="text" {...register("title", { required: true })} />
+          <input type="text" {...register("artist", { required: true })} />
+          {/* <input type="text" {...register("album", { required: true })} />
         <input type="text" {...register("id", { required: true })} />
-        <input type="file" accept="image/*" {...register("cover", { required: true })} />
-        <button type="submit">Submit</button>
-      </form>
-    </>
+        <input type="file" accept="image/*" {...register("cover", { required: true })} /> */}
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
   );
 }

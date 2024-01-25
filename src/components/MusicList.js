@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import classes from "./MusicList.module.css";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -19,37 +18,40 @@ const dummy_music = [
   },
 ];
 
-
-
 export function MusicList() {
   const [musicList, setMusicList] = useState([]);
 
   useEffect(() => {
     const getMusicList = async () => {
-      const musicListObject = await axios.get('https://react-http-f1077-default-rtdb.firebaseio.com/music.json')
-      return musicListObject.data;
+      try {
+        const response = await axios({
+          method: "GET",
+          url: "api/music",
+        })
+        console.log(response.data);
+        console.log(Object.values(response.data));
+      }
+      catch (error) {
+        alert(error.message);
+      };
     }
-    getMusicList().then(result => {
-      // if(!result) return;
-      const musicList = Object.values(result);
-      setMusicList(musicList);
-    });
+    getMusicList();
   }, []);
 
-  if(musicList.length === 0) return <p>not yet</p>;
+  if(dummy_music.length === 0) return <p>not yet</p>;
 
   return (
-    <test>
-      <ul>
+    <div>
+      <ul className={classes["list-group"]}>
         {dummy_music.map((music) => (
-          <li id={music.id} className={classes.test}>
+          <li id={music.id} className={classes["list-each"]}>
             <Link to={`/library/${music.id}`} state={{music}}>
               <h2>{music.title + '-' + music.artist}</h2>
-              <img src={music.cover} alt={music.title}/>
+              <img src={music.cover} alt={music.title} className={classes["list-each-image"]}/>
             </Link>
           </li>
         ))}
       </ul>
-    </test>
+    </div>
   );
 }
