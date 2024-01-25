@@ -14,16 +14,23 @@ export function MusicForm() {
   } = useForm();
 
   const onSubmit = async (data) => {
+    console.log(data);
     try {
-      await axios({
-        method: "post",
-        url: "/api/music",
-        body: {
-          title: data.title,
-          artist: data.artist,
-        },
+      const body = {
+        title: data.title,
+        artist: data.artist,
+      };
+
+      await axios.post("/api/music", body);
+      // await axios({
+      //   method: "post",
+      //   url: "/api/music",
+      //   body: {
+      //     title: data.title,
+      //     artist: data.artist,
+      //   },
         // headers: { "Content-Type": "application/json" },
-      });
+      // });
       setTimeout(() => {
         navigate("/library");
       }, 1000);
