@@ -16,12 +16,13 @@ export function MusicForm() {
   const onSubmit = async (data) => {
     console.log(data);
     try {
-      const body = {
-        title: data.title,
-        artist: data.artist,
-      };
-
-      await axios.post("/api/music", body);
+      await fetch("/api/music", {
+        method: "POST",
+        body: JSON.stringify({
+          title: data.title,
+          artist: data.artist,
+        }),
+      })
       // await axios({
       //   method: "post",
       //   url: "/api/music",
