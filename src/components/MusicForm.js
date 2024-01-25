@@ -17,7 +17,7 @@ export function MusicForm() {
     try {
       await axios({
         method: "post",
-        url: "api/music",
+        url: "/api/music",
         data: {
           title: data.title,
           artist: data.artist,
