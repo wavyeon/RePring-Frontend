@@ -16,6 +16,7 @@ export function MusicForm() {
   const onSubmit = async (data) => {
     console.log(data);
     try {
+      // fetch
       await fetch("/api/music", {
         method: "POST",
         body: JSON.stringify({
@@ -24,15 +25,24 @@ export function MusicForm() {
         }),
         headers: { "Content-Type": "application/json" },
       });
-      await axios({
-        method: "post",
-        url: "/api/music",
-        body: {
-          title: data.title,
-          artist: data.artist,
-        },
-        headers: { "Content-Type": "application/json" },
-      });
+
+      // axios
+      const url = "/api/music";
+      const body = {
+        title: data.title,
+        artist: data.artist,
+      };
+      const config = { "Content-Type": "application/json" };
+      await axios.post(url, body, config);
+      // await axios({
+      //   method: "POST",
+      //   url: "/api/music",
+      //   body: {
+      //     title: data.title,
+      //     artist: data.artist,
+      //   },
+      //   headers: { "Content-Type": "application/json" },
+      // });
       setTimeout(() => {
         navigate("/library");
       }, 1000);
