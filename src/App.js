@@ -1,5 +1,4 @@
 import "./App.css";
-import { useEffect, useState } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { RootLayout } from "./pages/Root";
 import { HomePage } from "./pages/Home";
@@ -39,17 +38,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  const [message, setMessage] = useState("");
-  useEffect(() => {
-    fetch("/home/test")
-      .then((res) => {
-        console.log(res);
-        res.text();
-      })
-      .then((m) => setMessage(m));
-    fetch("/home/prac")
-      .then((res) => console.log(res));
-  }, []);
   return <RouterProvider router={router} />;
 }
 export default App;
