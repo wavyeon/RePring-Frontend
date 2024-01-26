@@ -24,7 +24,7 @@ export function MusicForm() {
         artist: data.artist,
         cover: data.cover,
       };
-      const config = { "Content-Type": "application/json" };
+      const config = { headers: { "Content-Type": "multipart/form-data" } };
       const response = await axios.post(url, body, config);
       console.log(response);
       setTimeout(() => {
@@ -43,7 +43,11 @@ export function MusicForm() {
           <input type="text" {...register("artist", { required: true })} />
           {/* <input type="text" {...register("album", { required: true })} />
           <input type="text" {...register("id", { required: true })} /> */}
-          <input type="file" accept="image/*" {...register("cover", { required: true })} />
+          <input
+            type="file"
+            accept="image/*"
+            {...register("cover", { required: true })}
+          />
           <button type="submit">Submit</button>
         </form>
       </div>
