@@ -14,34 +14,19 @@ export function MusicForm() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
+    console.log(data.title);
+    console.log(data.cover);
     try {
-      // fetch
-      await fetch("/api/music", {
-        method: "POST",
-        body: JSON.stringify({
-          title: data.title,
-          artist: data.artist,
-        }),
-        headers: { "Content-Type": "application/json" },
-      });
-
       // axios
       const url = "/api/music";
       const body = {
         title: data.title,
         artist: data.artist,
+        cover: data.cover,
       };
       const config = { "Content-Type": "application/json" };
-      await axios.post(url, body, config);
-      await axios({
-        method: "POST",
-        url: "/api/music",
-        body: {
-          title: data.title,
-          artist: data.artist,
-        },
-      });
+      const response = await axios.post(url, body, config);
+      console.log(response);
       setTimeout(() => {
         navigate("/library");
       }, 1000);
@@ -57,8 +42,8 @@ export function MusicForm() {
           <input type="text" {...register("title", { required: true })} />
           <input type="text" {...register("artist", { required: true })} />
           {/* <input type="text" {...register("album", { required: true })} />
-        <input type="text" {...register("id", { required: true })} />
-        <input type="file" accept="image/*" {...register("cover", { required: true })} /> */}
+          <input type="text" {...register("id", { required: true })} /> */}
+          <input type="file" accept="image/*" {...register("cover", { required: true })} />
           <button type="submit">Submit</button>
         </form>
       </div>
