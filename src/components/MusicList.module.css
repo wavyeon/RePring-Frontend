@@ -1,14 +1,43 @@
-.list-group {
-  /* display: flex; */
+.list {
+  display: flex;  
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: stretch;
 }
 
-.list-each {
-  float: left;
-  list-style: none;
+.card {
+  border-radius: 10%;
   margin: 50px;
+  justify-content: center;
+  align-items: center;
+}
+
+.card:hover {
+  background-color: rgb(199, 193, 193);
+}
+
+.list-item {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: baseline;
+  width: 400px;
+  height: 420px;
+  margin-top: 20px;
+}
+
+.list-item-text {
+  float:left;
+  margin: 0px;
+  padding-left: 40px;
 }
 
 .list-each-image {
-  width: 300px;
-  height: 300px;
+  width: 80%;
+  height: auto;
+  display: block;
+  margin: 20px auto;
+  margin-top: 10px;
+  border-radius: 10%;
 }

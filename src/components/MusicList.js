@@ -16,6 +16,18 @@ const dummy_music = [
     id: 2,
     cover: "/img/commondays.jpg",
   },
+  {
+    title: "NERD",
+    artist: "B.I",
+    id: 3,
+    cover: "/img/nerd.jpg",
+  },
+  {
+    title: "뭐",
+    artist: "쿠기",
+    id: 4,
+    cover: "/img/what.jpg",
+  },
 ];
 
 export function MusicList() {
@@ -27,29 +39,39 @@ export function MusicList() {
         const response = await axios({
           method: "get",
           url: "/api/music",
-        })
+        });
         console.log(response.data);
-        console.log(Object.values(response.data));
+        // console.log(Object.values(response.data));
+      } catch (error) {
+        // alert(error.message);
       }
-      catch (error) {
-        alert(error.message);
-      };
-    }
+    };
     getMusicList();
   }, []);
 
-  if(dummy_music.length === 0) return <p>not yet</p>;
+  if (dummy_music.length === 0) return <p>not yet</p>;
 
   return (
     <div>
-      <ul className={classes["list-group"]}>
+      <ul className={classes["list"]}>
         {dummy_music.map((music) => (
-          <li id={music.id} className={classes["list-each"]}>
-            <Link to={`/library/${music.id}`} state={{music}}>
-              <h2>{music.title + '-' + music.artist}</h2>
-              <img src={music.cover} alt={music.title} className={classes["list-each-image"]}/>
+          <div className={classes["card"]}>
+            <Link
+              to={`/library/${music.id}`}
+              state={{ music }}
+            >
+              <li id={music.id} className={classes["list-item"]}>
+                <h2 className={classes["list-item-text"]}>{music.title}</h2>
+                <h3 className={classes["list-item-text"]}>{music.artist}</h3>
+                <img
+                  src={music.cover}
+                  alt={music.title}
+                  className={classes["list-each-image"]}
+                />
+                {/* <img src={`/api/music/${music.id}`} alt={music.title} className={classes["list-each-image"]}/> */}
+              </li>
             </Link>
-          </li>
+          </div>
         ))}
       </ul>
     </div>
