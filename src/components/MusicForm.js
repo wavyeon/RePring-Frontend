@@ -17,9 +17,9 @@ export function MusicForm() {
     console.log(data);
     console.log(data.cover[0]);
     const formData = new FormData();
-    formData.append('title', data.title);
-    formData.append('artist', data.artist);
-    formData.append('cover', data.cover[0]);
+    formData.append("title", data.title);
+    formData.append("artist", data.artist);
+    formData.append("cover", data.cover[0]);
     console.log(formData);
     try {
       // axios
@@ -27,8 +27,14 @@ export function MusicForm() {
       const body = formData;
       const config = { headers: { "Content-Type": "multipart/form-data" } };
       // const config = { headers: { "Content-Type": "application/json" } };
-      const response = await axios.post(url, body, config);
-      console.log(response);
+      const response1 = await axios.post(url, body, config);
+      const response2 = await axios({
+        method: "post",
+        url: "/api/music",
+        config: { headers: { "Content-Type": "multipart/form-data" } },
+      });
+      console.log(response1);
+      console.log(response2);
       setTimeout(() => {
         navigate("/library");
       }, 1000);
