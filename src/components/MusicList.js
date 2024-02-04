@@ -35,22 +35,19 @@ export function MusicList() {
 
   useEffect(() => {
     const getMusicList = async () => {
-
-      
-
-
       try {
-        const url = "/api/music";
-        const config = { headers: { "Content-Type": "application/json" } };
-        const response1 = await axios.get(url, config);
-        console.log(response1);
+        // const url = "/api/music";
+        // const config = { headers: { "Content-Type": "application/json" } };
+        // const response1 = await axios.get(url, config);
+        // console.log(response1);
 
         const response2 = await axios({
           method: "get",
           url: "/api/music",
+          headers: { "Content-Type": "application/json" }
         });
         console.log(response2);
-        
+        setMusicList(response2.data)
       } catch (error) {
         alert(error.message);
       }
@@ -58,12 +55,12 @@ export function MusicList() {
     getMusicList();
   }, []);
 
-  if (dummy_music.length === 0) return <p>not yet</p>;
+  if (musicList.length === 0) return <p>not yet</p>;
 
   return (
     <div>
       <ul className={classes["list"]}>
-        {dummy_music.map((music) => (
+        {musicList.map((music) => (
           <div className={classes["card"]}>
             <Link
               to={`/library/${music.id}`}
@@ -73,7 +70,7 @@ export function MusicList() {
                 <h2 className={classes["list-item-text"]}>{music.title}</h2>
                 <h3 className={classes["list-item-text"]}>{music.artist}</h3>
                 <img
-                  src={music.cover}
+                  src={music.imageUrl}
                   alt={music.title}
                   className={classes["list-each-image"]}
                 />
