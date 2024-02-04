@@ -11,12 +11,12 @@ export async function createNewMusic(formData) {
     headers: { "Content-Type": "multipart/form-data" },
   });
 
-  if (!response.ok) {
-    const error = new Error("An error occurred while creating the event");
-    error.code = response.status;
-    error.info = await response.json();
-    throw error;
-  }
+  // if (!response.ok) {
+  //   const error = new Error("An error occurred while creating the event");
+  //   error.code = response.status;
+  //   error.info = await response.json();
+  //   throw error;
+  // }
 
   return await response.json();
 }
@@ -28,12 +28,12 @@ export async function getAllMusic() {
     headers: { "Content-Type": "application/json" },
   });
 
-  if (!response.ok) {
-    const error = new Error("An error occurred while creating the event");
-    error.code = response.status;
-    error.info = await response.json();
-    throw error;
-  }
+  // if (!response.ok) {
+  //   const error = new Error("An error occurred while creating the event");
+  //   error.code = response.status;
+  //   error.info = await response.json();
+  //   throw error;
+  // }
 
   return await response.json();
 }

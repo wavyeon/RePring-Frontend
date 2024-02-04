@@ -9,15 +9,15 @@ import { queryClient } from "../util/http";
 export function MusicForm() {
   const navigate = useNavigate();
 
-  // const { mutate, isPending, isError, error } = useMutation({
-  //   mutationFn: createNewMusic,
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({ queryKey: ['musics'], exact: false});
-  //     setTimeout(() => {
-  //       navigate("/library");
-  //     }, 1000);
-  //   }
-  // });
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: createNewMusic,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['musics'], exact: false});
+      setTimeout(() => {
+        navigate("/library");
+      }, 1000);
+    }
+  });
 
   const {
     register,
@@ -36,21 +36,21 @@ export function MusicForm() {
     console.log(formData);
 
     // tanstack query
-    // mutate(formData);
+    mutate(formData);
 
-    try {
-      await axios({
-        method: "post",
-        url: "/api/music",
-        data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      setTimeout(() => {
-        navigate("/library");
-      }, 1000);
-    } catch (error) {
-      alert(error.message);
-    }
+  //   try {
+  //     await axios({
+  //       method: "post",
+  //       url: "/api/music",
+  //       data: formData,
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     });
+  //     setTimeout(() => {
+  //       navigate("/library");
+  //     }, 1000);
+  //   } catch (error) {
+  //     alert(error.message);
+  //   }
   };
 
   return (

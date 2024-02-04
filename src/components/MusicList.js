@@ -35,32 +35,36 @@ import { getAllMusic } from "../util/http";
 export function MusicList() {
   const [musicList, setMusicList] = useState([]);
 
-  // const { data, isPending, isError, error } = useQuery({
-  //   queryKey: ["musics"],
-  //   queryFn: getAllMusic
-  // })
+  const { data, isPending, isError, error } = useQuery({
+    queryKey: ["musics"],
+    queryFn: getAllMusic
+  })
 
-  // console.log(data);
+  console.log(data);
 
-  // if(data) {
-  //   setMusicList(data);
-  // }
+  if(data) {
+    setMusicList(data);
+  }
 
-  useEffect(() => {
-    const getMusicList = async () => {
-      try {
-        const response = await axios({
-          method: "get",
-          url: "/api/music",
-          headers: { "Content-Type": "application/json" }
-        });
-        setMusicList(response.data)
-      } catch (error) {
-        alert(error.message);
-      }
-    };
-    getMusicList();
-  }, []);
+  if(isError) {
+    console.log("error");
+  }
+
+  // useEffect(() => {
+  //   const getMusicList = async () => {
+  //     try {
+  //       const response = await axios({
+  //         method: "get",
+  //         url: "/api/music",
+  //         headers: { "Content-Type": "application/json" }
+  //       });
+  //       setMusicList(response.data)
+  //     } catch (error) {
+  //       alert(error.message);
+  //     }
+  //   };
+  //   getMusicList();
+  // }, []);
 
   if (musicList.length === 0) return <p>not yet</p>;
 
