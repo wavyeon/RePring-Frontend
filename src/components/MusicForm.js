@@ -2,9 +2,22 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import classes from "./MusicForm.module.css";
+import { useMutation } from "@tanstack/react-query";
+import { createNewMusic } from "../util/http";
+import { queryClient } from "../util/http";
 
 export function MusicForm() {
   const navigate = useNavigate();
+
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: createNewMusic,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['musics'], exact: false});
+      setTimeout(() => {
+        navigate("/library");
+      }, 1000);
+    }
+  });
 
   const {
     register,
@@ -21,27 +34,23 @@ export function MusicForm() {
     formData.append("artist", data.artist);
     formData.append("cover", data.cover[0]);
     console.log(formData);
-    try {
-      // const url = "/api/music";
-      // const body = formData;
-      // const config = { headers: { "Content-Type": "multipart/form-data" } };
-      // const response1 = await axios.post(url, body, config);
-      // console.log(response1);
 
-      const response2 = await axios({
-        method: "post",
-        url: "/api/music",
-        data: formData,
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-      console.log(response2);
+    // tanstack query
+    mutate(formData);
 
-      setTimeout(() => {
-        navigate("/library");
-      }, 1000);
-    } catch (error) {
-      alert(error.message);
-    }
+  //   try {
+  //     await axios({
+  //       method: "post",
+  //       url: "/api/music",
+  //       data: formData,
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     });
+  //     setTimeout(() => {
+  //       navigate("/library");
+  //     }, 1000);
+  //   } catch (error) {
+  //     alert(error.message);
+  //   }
   };
 
   return (
@@ -50,8 +59,7 @@ export function MusicForm() {
         <form encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
           <input type="text" {...register("title", { required: true })} />
           <input type="text" {...register("artist", { required: true })} />
-          {/* <input type="text" {...register("album", { required: true })} />
-          <input type="text" {...register("id", { required: true })} /> */}
+          {/* <input type="text" {...register("album", { required: true })} /> */}
           <input
             type="file"
             accept="image/*"
