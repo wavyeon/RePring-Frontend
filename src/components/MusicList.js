@@ -35,15 +35,24 @@ export function MusicList() {
 
   useEffect(() => {
     const getMusicList = async () => {
+
+      
+
+
       try {
-        const response = await axios({
+        const url = "/api/music";
+        const config = { headers: { "Content-Type": "application/json" } };
+        const response1 = await axios.get(url, config);
+        console.log(response1);
+
+        const response2 = await axios({
           method: "get",
           url: "/api/music",
         });
-        console.log(response.data);
-        // console.log(Object.values(response.data));
+        console.log(response2);
+        
       } catch (error) {
-        // alert(error.message);
+        alert(error.message);
       }
     };
     getMusicList();

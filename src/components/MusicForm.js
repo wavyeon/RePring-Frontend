@@ -26,15 +26,14 @@ export function MusicForm() {
       const url = "/api/music";
       const body = formData;
       const config = { headers: { "Content-Type": "multipart/form-data" } };
-      // const config = { headers: { "Content-Type": "application/json" } };
       const response1 = await axios.post(url, body, config);
-      const response2 = await axios({
-        method: "post",
-        url: "/api/music",
-        config: { headers: { "Content-Type": "multipart/form-data" } },
-      });
+      // const response2 = await axios({
+      //   method: "post",
+      //   url: "/api/music",
+      //   config: { headers: { "Content-Type": "multipart/form-data" } },
+      // });
       console.log(response1);
-      console.log(response2);
+      // console.log(response2);
       setTimeout(() => {
         navigate("/library");
       }, 1000);

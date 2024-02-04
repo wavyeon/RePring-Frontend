@@ -1,27 +1,71 @@
 import { Comment } from "./Comment";
 import { TextField, Button } from "@mui/material";
-import { useState } from "react";
-import classes from "./CommentList.module.css"
-
-let cnt = 0;
+import { useEffect, useState } from "react";
+import classes from "./CommentList.module.css";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export function CommentList() {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState([
+    {
+      text: "쌌다",
+      id: 1,
+    },
+    {
+      text: "김선 감성 모르면 나가라",
+      id: 2,
+    }
+  ]);
   const [input, setInput] = useState("");
+  const params = useParams();
+
+  useEffect(() => {
+   const getComment = async () => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: `/api/music/${params.musicId}/comments`,
+        config: { headers: { 'Content-Type': 'application/json' } },
+      });
+      console.log(response.data);
+      // setComments(response.data.comments);
+    } catch (error) {
+      // alert(error.message);
+    }
+   }
+   getComment();
+  });
+
   const inputChangeHandler = (event) => {
     setInput(event.target.value);
   };
 
-  const addCommentHandler = (event) => {
+  const addCommentHandler = async (event) => {
     setComments((prev) => {
       return [...prev, input];
     });
+
+    //백엔드 연결 시
+    const response = await axios({
+      method: "post",
+      url: `/api/music/${params.musicId}/comments`,
+      config: { headers: { "Content-Type": "application/json" } },
+    })
+    console.log(response);
+
     setInput("");
-    cnt++;
   };
 
-  const deleteCommentHandler = (value) => {
-    setComments(comments.filter((comment) => comment !== value));
+  const deleteCommentHandler = async (text, id) => {
+    setComments(comments.filter((comment) => comment.id !== id));
+
+    //백엔드 연결 시
+    const response = await axios({
+      method: "delete",
+      url: `/api/music/${params.musicId}/comments/${id}`,
+      config: { headers: { "Content-Type": "application/json" } },
+    })
+    console.log(response);
   };
 
   let commentList;
@@ -32,15 +76,15 @@ export function CommentList() {
     commentList = comments.map((comment) => {
       return (
         <Comment
-          value={comment}
-          deleteCommentHandler={deleteCommentHandler}
+          value={comment.text}
+          deleteCommentHandler={() => deleteCommentHandler(comment.text, comment.id)}
           setComments={setComments}
           comments={comments}
-          cnt={cnt}
         />
       );
     });
   }
+
   return (
     <div>
       <ul>{commentList}</ul>
