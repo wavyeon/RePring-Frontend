@@ -5,6 +5,8 @@ import { HomePage } from "./pages/Home";
 import { LibraryPage } from "./pages/Library";
 import { MusicPage } from "./pages/Music";
 import { NewMusicPage } from "./pages/NewMusic";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "./util/http";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +40,10 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 export default App;
