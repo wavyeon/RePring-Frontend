@@ -21,9 +21,9 @@ export async function getAllMusic() {
     headers: { "Content-Type": "application/json" },
   });
 
-  console.log(response);
+  const { data } = response;
 
-  return response;
+  return data;
 }
 
 export async function deleteMusic(musicId) {
