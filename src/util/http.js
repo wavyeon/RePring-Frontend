@@ -28,14 +28,14 @@ export async function getAllMusic() {
   return data;
 }
 
-// export async function deleteMusic(musicId) {
-//   const response = await axios({
-//     method: "delete",
-//     url: `/api/music/${musicId}`,
-//   });
+export async function deleteMusic(musicId) {
+  const response = await axios({
+    method: "delete",
+    url: `/api/music/${musicId}`,
+  });
 
-//   return await response.json();
-// }
+  return await response.json();
+}
 
 // export async function getAllComment() {
 
