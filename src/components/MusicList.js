@@ -39,14 +39,14 @@ export function MusicList() {
     queryFn: getAllMusic
   })
 
-  console.log(data);
+  // console.log(data);
 
   if(data) {
     setMusicList(data);
   }
 
   if(isError) {
-    console.log("error");
+    console.log(error.message);
   }
 
   if (musicList.length === 0) return <p>not yet</p>;
