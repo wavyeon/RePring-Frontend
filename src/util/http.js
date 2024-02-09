@@ -11,7 +11,7 @@ export async function createNewMusic(formData) {
     headers: { "Content-Type": "multipart/form-data" },
   });
 
-  return await response.json();
+  return response;
 }
 
 export async function getAllMusic() {
@@ -22,10 +22,8 @@ export async function getAllMusic() {
   });
 
   console.log(response);
-  const data = await response.json();
-  console.log(data);
 
-  return data;
+  return response;
 }
 
 export async function deleteMusic(musicId) {
