@@ -22,10 +22,10 @@ export function MusicDetail({ music }) {
   return (
     <>
       <h1>{music.title}</h1>
+      <button onClick={() => mutate(music.id)}>삭제</button>
       <div className={classes.div}>
-        <img src={music.cover} alt={music.title} />
+        <img src={`/api/music/image/${music.id}`} alt={music.title} />
       </div>
-      <button onClick={() => mutate(music.id)}></button>
       <CommentList />
     </>
   );
