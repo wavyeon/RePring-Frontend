@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import classes from "./MusicList.module.css";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllMusic } from "../util/http";
 
@@ -49,22 +48,6 @@ export function MusicList() {
   if(isError) {
     console.log("error");
   }
-
-  // useEffect(() => {
-  //   const getMusicList = async () => {
-  //     try {
-  //       const response = await axios({
-  //         method: "get",
-  //         url: "/api/music",
-  //         headers: { "Content-Type": "application/json" }
-  //       });
-  //       setMusicList(response.data)
-  //     } catch (error) {
-  //       alert(error.message);
-  //     }
-  //   };
-  //   getMusicList();
-  // }, []);
 
   if (musicList.length === 0) return <p>not yet</p>;
 

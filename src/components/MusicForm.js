@@ -35,22 +35,7 @@ export function MusicForm() {
     formData.append("cover", data.cover[0]);
     console.log(formData);
 
-    // tanstack query
     mutate(formData);
-
-  //   try {
-  //     await axios({
-  //       method: "post",
-  //       url: "/api/music",
-  //       data: formData,
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //     });
-  //     setTimeout(() => {
-  //       navigate("/library");
-  //     }, 1000);
-  //   } catch (error) {
-  //     alert(error.message);
-  //   }
   };
 
   return (
