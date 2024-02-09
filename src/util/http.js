@@ -21,20 +21,23 @@ export async function getAllMusic() {
     headers: { "Content-Type": "application/json" },
   });
 
-  return await response.json();
+  console.log(response);
+  const data = await response.json();
+  console.log(data);
+
+  return data;
 }
 
-export async function deleteMusic(musicId) {
-  const response = await axios({
-    method: "delete",
-    url: `api/music/${musicId}`,
-  });
+// export async function deleteMusic(musicId) {
+//   const response = await axios({
+//     method: "delete",
+//     url: `/api/music/${musicId}`,
+//   });
 
-  return await response.json();
-}
+//   return await response.json();
+// }
 
-export async function getAllComment() {
-
+// export async function getAllComment() {
 
   // return await response.json();
-}
+// }
