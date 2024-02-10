@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import classes from "./MusicList.module.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllMusic } from "../util/http";
 import axios from "axios";
@@ -35,18 +35,14 @@ import axios from "axios";
 export function MusicList() {
   const [musicList, setMusicList] = useState([]);
 
-  const { data, isPending, isError, error } = useQuery({
+  const { data, isPending } = useQuery({
     queryKey: ["musics"],
     // queryFn: getAllMusic
-    queryFn: async () => {
-      const { data } = await axios({
-        method: "get",
-        url: "/api/music",
-        headers: { "Content-Type": "application/json" },
-      });
-      return data;
-    }
+    queryFn: getAllMusic,
+    // onSuccess: useEffect(setMusicList(data), [setMusicList, data]),
   })
+
+  useEffect(setMusicList(data));
 
   let content;
 
@@ -54,12 +50,11 @@ export function MusicList() {
     content = <p>쿼리 중</p>
   }
 
-  if(isError) {
-    console.log(error.message);
-  }
+  // if(isError) {
+  //   console.log(error.message);
+  // }
 
   if(data) {
-    setMusicList(data);
     content = (
       <ul className={classes["list"]}>
         {musicList.map((music) => (
