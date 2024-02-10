@@ -39,22 +39,19 @@ export function MusicList() {
     queryFn: getAllMusic
   })
 
+  let content;
+
   if(isPending) {
-    console.log("쿼리중");
+    content = <p>쿼리 중</p>
   }
 
   if(isError) {
     console.log(error.message);
   }
 
-  if (musicList.length === 0) return <p>not yet</p>;
-
   if(data) {
     setMusicList(data);
-  }
-
-  return (
-    <div>
+    content = (
       <ul className={classes["list"]}>
         {musicList.map((music) => (
           <div className={classes["card"]}>
@@ -75,6 +72,14 @@ export function MusicList() {
           </div>
         ))}
       </ul>
+    )
+  }
+
+  // if (musicList.length === 0) return <p>not yet</p>;
+
+  return (
+    <div>
+      {content}
     </div>
   );
 }
