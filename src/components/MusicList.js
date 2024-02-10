@@ -39,10 +39,8 @@ export function MusicList() {
     queryFn: getAllMusic
   })
 
-  // console.log(data);
-
-  if(data) {
-    setMusicList(data);
+  if(isPending) {
+    console.log("쿼리중");
   }
 
   if(isError) {
@@ -50,6 +48,10 @@ export function MusicList() {
   }
 
   if (musicList.length === 0) return <p>not yet</p>;
+
+  if(data) {
+    setMusicList(data);
+  }
 
   return (
     <div>

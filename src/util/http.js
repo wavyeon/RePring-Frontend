@@ -20,10 +20,8 @@ export async function getAllMusic() {
     url: "/api/music",
     headers: { "Content-Type": "application/json" },
   });
-
-  const { data } = response;
-
-  return data;
+  console.log(response.data);
+  return response.data;
 }
 
 export async function deleteMusic(musicId) {

@@ -12,10 +12,11 @@ export function MusicForm() {
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: createNewMusic,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['musics'], exact: false});
+      console.log("성공");
       setTimeout(() => {
         navigate("/library");
-      }, 1000);
+      }, 500);
+      queryClient.invalidateQueries({ queryKey: ['musics'], exact: false});
     }
   });
 
