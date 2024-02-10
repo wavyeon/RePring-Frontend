@@ -15,13 +15,13 @@ export async function createNewMusic(formData) {
 }
 
 export async function getAllMusic() {
-  const response = await axios({
+  const { data } = await axios({
     method: "get",
     url: "/api/music",
     headers: { "Content-Type": "application/json" },
   });
-  console.log(response.data);
-  return response.data;
+  console.log(data);
+  return data;
 }
 
 export async function deleteMusic(musicId) {
