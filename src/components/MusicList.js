@@ -33,16 +33,14 @@ import axios from "axios";
 // ];
 
 export function MusicList() {
-  const [musicList, setMusicList] = useState([]);
+  // const [musicList, setMusicList] = useState([]);
 
-  const { data, isPending } = useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ["musics"],
     // queryFn: getAllMusic
     queryFn: getAllMusic,
     // onSuccess: useEffect(setMusicList(data), [setMusicList, data]),
   })
-
-  useEffect(setMusicList(data));
 
   let content;
 
@@ -50,14 +48,14 @@ export function MusicList() {
     content = <p>쿼리 중</p>
   }
 
-  // if(isError) {
-  //   console.log(error.message);
-  // }
+  if(isError) {
+    console.log(error.message);
+  }
 
   if(data) {
     content = (
       <ul className={classes["list"]}>
-        {musicList.map((music) => (
+        {data.map((music) => (
           <div className={classes["card"]}>
             <Link
               to={`/library/${music.id}`}
@@ -79,7 +77,7 @@ export function MusicList() {
     )
   }
 
-  if (musicList.length === 0) return <p>not yet</p>;
+  if (data.length === 0) return <p>not yet</p>;
 
   return (
     <div>
