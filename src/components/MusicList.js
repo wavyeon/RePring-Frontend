@@ -3,6 +3,7 @@ import classes from "./MusicList.module.css";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllMusic } from "../util/http";
+import axios from "axios";
 
 // const dummy_music = [
 //   {
@@ -36,7 +37,15 @@ export function MusicList() {
 
   const { data, isPending, isError, error } = useQuery({
     queryKey: ["musics"],
-    queryFn: getAllMusic
+    // queryFn: getAllMusic
+    queryFn: async () => {
+      const { data } = await axios({
+        method: "get",
+        url: "/api/music",
+        headers: { "Content-Type": "application/json" },
+      });
+      return data;
+    }
   })
 
   let content;
@@ -75,7 +84,7 @@ export function MusicList() {
     )
   }
 
-  // if (musicList.length === 0) return <p>not yet</p>;
+  if (musicList.length === 0) return <p>not yet</p>;
 
   return (
     <div>
