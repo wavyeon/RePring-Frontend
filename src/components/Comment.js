@@ -1,14 +1,34 @@
 import { useState } from "react";
 import { TextField } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import { deleteComment, editComment, queryClient } from "../util/http";
 
-export function Comment({
-  value,
-  deleteCommentHandler,
-  comments,
-  setComments,
-  cnt,
-}) {
+export function Comment({ musicId, commentId, text }) {
   const [isEditing, setIsEditing] = useState(false);
+
+  const {
+    mutate: mutateEditComment,
+    isPending: isEditCommentPending,
+    isError: isEditCommentError,
+    error: editCommentError,
+  } = useMutation({
+    mutationFn: editComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments"], exact: false });
+    },
+  });
+
+  const {
+    mutate: mutateDeleteComment,
+    isPending: isDeleteCommentPending,
+    isError: isDeleteCommentError,
+    error: deleteCommentError,
+  } = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments"], exact: false });
+    },
+  });
 
   const attemptCommentEditHandler = (event) => {
     setIsEditing(!isEditing);
@@ -16,41 +36,43 @@ export function Comment({
 
   const completeCommentEditHandler = (event) => {
     event.preventDefault();
-    const editedComments = comments.map((comment) => {
-      if (comment === value) {
-        comment = event.target[0].value;
-        return comment;
-      } else {
-        return comment;
-      }
+    console.log(event.target[0].value);
+    const response = mutateEditComment({
+      musicId: musicId,
+      commentId: commentId,
+      commentInfo: event.target[0].value, // 나중엔 객체로
     });
-    setComments(editedComments);
-    setIsEditing(!isEditing);
+    console.log(response);
+    setIsEditing(!isEditing); // onSuccess에 넣어보기
   };
 
-  let editingComment;
+  const deleteCommentHandler = () => { // handler 안거치고 onClick에 mutate 할당해보기
+    const response = mutateDeleteComment({ musicId, commentId });
+    console.log(response);
+  };
+
+  let content;
   if (isEditing) {
-    editingComment = (
+    content = (
       <>
         <form onSubmit={completeCommentEditHandler}>
-          <input type="text" defaultValue={value} />
+          <input type="text" defaultValue={text} />
           <button type="submit">완료</button>
         </form>
       </>
     );
   } else {
-    editingComment = (
+    content = (
       <>
-        {value}
+        {text}
         <button onClick={attemptCommentEditHandler}>수정</button>
-        <button onClick={() => deleteCommentHandler(value)}>삭제</button>
+        <button onClick={deleteCommentHandler}>삭제</button>
       </>
     );
   }
-  console.log(cnt, value);
   return (
     <>
-      <li key={cnt}>{editingComment}</li>
+      <li key={commentId}>{content}</li>
     </>
   );
 }

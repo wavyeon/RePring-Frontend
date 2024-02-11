@@ -3,83 +3,63 @@ import { TextField, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import classes from "./CommentList.module.css";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { getAllComment, createNewComment, queryClient } from "../util/http";
 
 export function CommentList() {
-  const [comments, setComments] = useState([
-    {
-      text: "쌌다",
-      id: 1,
-    },
-    {
-      text: "김선 감성 모르면 나가라",
-      id: 2,
-    }
-  ]);
   const [input, setInput] = useState("");
   const params = useParams();
 
-  useEffect(() => {
-   const getComment = async () => {
-    try {
-      const response = await axios({
-        method: "get",
-        url: `/api/music/${params.musicId}/comments`,
-        config: { headers: { 'Content-Type': 'application/json' } },
-      });
-      console.log(response.data);
-      // setComments(response.data.comments);
-    } catch (error) {
-      // alert(error.message);
-    }
-   }
-   getComment();
+  const {
+    data: comments,
+    isPending,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["comments", params.musicId],
+    queryFn: getAllComment,
+  });
+
+  const {
+    mutate: mutateCreateComment,
+    isPending: isCreateCommentPending,
+    isError: isCreateCommentError,
+    error: createCommentError,
+  } = useMutation({
+    mutationFn: createNewComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments"], exact: false });
+    },
   });
 
   const inputChangeHandler = (event) => {
     setInput(event.target.value);
   };
 
-  const addCommentHandler = async (event) => {
-    setComments((prev) => {
-      return [...prev, input];
+  const addCommentHandler = () => {
+    const response = mutateCreateComment({
+      musicId: params.musicId,
+      commentInfo: input,
     });
-
-    //백엔드 연결 시
-    const response = await axios({
-      method: "post",
-      url: `/api/music/${params.musicId}/comments`,
-      config: { headers: { "Content-Type": "application/json" } },
-    })
     console.log(response);
-
     setInput("");
   };
 
-  const deleteCommentHandler = async (text, id) => {
-    setComments(comments.filter((comment) => comment.id !== id));
+  let content;  
 
-    //백엔드 연결 시
-    const response = await axios({
-      method: "delete",
-      url: `/api/music/${params.musicId}/comments/${id}`,
-      config: { headers: { "Content-Type": "application/json" } },
-    })
-    console.log(response);
-  };
+  if (isError) {
+    console.log(error.message);
+  }
 
-  let commentList;
-
-  if (comments.length === 0) {
-    commentList = <p>no comment yet.</p>;
-  } else {
-    commentList = comments.map((comment) => {
+  if (comments) {
+    content = comments.map((comment) => {
       return (
         <Comment
-          value={comment.text}
-          deleteCommentHandler={() => deleteCommentHandler(comment.text, comment.id)}
-          setComments={setComments}
-          comments={comments}
+          musicId={params.musicId}
+          commentId={comment.id}
+          text={comment.text}
+          // onDelete={deleteCommentHandler.bind(null, params.musicId, comment.id)}
+          // onDelete={() => deleteCommentHandler({musicId: params.musicId, commentId: comment.id})}
         />
       );
     });
@@ -87,7 +67,7 @@ export function CommentList() {
 
   return (
     <div>
-      <ul>{commentList}</ul>
+      <ul>{content}</ul>
       <TextField
         // onClick={isLogin}
         onChange={inputChangeHandler}

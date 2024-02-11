@@ -3,7 +3,6 @@ import classes from "./MusicList.module.css";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllMusic } from "../util/http";
-import axios from "axios";
 
 // const dummy_music = [
 //   {
@@ -33,13 +32,9 @@ import axios from "axios";
 // ];
 
 export function MusicList() {
-  // const [musicList, setMusicList] = useState([]);
-
-  const { data, isPending, isError, error } = useQuery({
+  const { data: musicList, isPending, isError, error } = useQuery({
     queryKey: ["musics"],
-    // queryFn: getAllMusic
     queryFn: getAllMusic,
-    // onSuccess: useEffect(setMusicList(data), [setMusicList, data]),
   })
 
   let content;
@@ -52,10 +47,10 @@ export function MusicList() {
     console.log(error.message);
   }
 
-  if(data) {
+  if(musicList.length > 0) {
     content = (
       <ul className={classes["list"]}>
-        {data.map((music) => (
+        {musicList.map((music) => (
           <div className={classes["card"]}>
             <Link
               to={`/library/${music.id}`}
@@ -76,8 +71,6 @@ export function MusicList() {
       </ul>
     )
   }
-
-  if (data.length === 0) return <p>not yet</p>;
 
   return (
     <div>

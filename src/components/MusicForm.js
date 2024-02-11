@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import classes from "./MusicForm.module.css";
 import { useMutation } from "@tanstack/react-query";
@@ -28,14 +27,10 @@ export function MusicForm() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
-    console.log(data.cover[0]);
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("artist", data.artist);
     formData.append("cover", data.cover[0]);
-    console.log(formData);
-
     mutate(formData);
   };
 
