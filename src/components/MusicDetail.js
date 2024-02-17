@@ -8,7 +8,7 @@ export function MusicDetail({ music }) {
   const navigate = useNavigate();
 
   const { mutate, isPending, isError, error } = useMutation({
-    mutationFn: deleteMusic,
+    mutationFn: () => deleteMusic({musicId: music.musicId}),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['musics'], exact: false});
       setTimeout(() => {
