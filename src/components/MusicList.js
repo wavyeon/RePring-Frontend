@@ -47,8 +47,33 @@ export function MusicList() {
     console.log(error.message);
   }
 
-  if(musicList.length > 0) {
-    content = (
+  // if(musicList.length > 0) {
+  //   content = (
+  //     <ul className={classes["list"]}>
+  //       {musicList.map((music) => (
+  //         <div className={classes["card"]}>
+  //           <Link
+  //             to={`/library/${music.id}`}
+  //             state={{ music }}
+  //           >
+  //             <li id={music.id} className={classes["list-item"]}>
+  //               <h2 className={classes["list-item-text"]}>{music.title}</h2>
+  //               <h3 className={classes["list-item-text"]}>{music.artist}</h3>
+  //               <img
+  //                 src={`/api/music/image/${music.id}`}
+  //                 alt={music.title}
+  //                 className={classes["list-each-image"]}
+  //               />
+  //             </li>
+  //           </Link>
+  //         </div>
+  //       ))}
+  //     </ul>
+  //   )
+  // }
+
+  return (
+    <div>
       <ul className={classes["list"]}>
         {musicList.map((music) => (
           <div className={classes["card"]}>
@@ -69,12 +94,6 @@ export function MusicList() {
           </div>
         ))}
       </ul>
-    )
-  }
-
-  return (
-    <div>
-      {content}
     </div>
   );
 }
