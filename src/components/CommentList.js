@@ -17,7 +17,7 @@ export function CommentList() {
     error,
   } = useQuery({
     queryKey: ["comments", params.musicId],
-    queryFn: () => getAllComment(params.musicId),
+    queryFn: () => getAllComment({musicId: params.musicId}),
   });
 
   const {
