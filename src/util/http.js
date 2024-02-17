@@ -54,10 +54,10 @@ export async function getAllComment({ musicId }) {
   return data;
 }
 
-export async function editComment({ musicId, commentId, commentInfo }) {
+export async function editComment({ commentId, commentInfo }) {
   const response = await axios({
     method: "put",
-    url: `/api/music/comments/${musicId}/${commentId}`,
+    url: `/api/music/comments/${commentId}`,
     data: commentInfo, // 일단은 입력한 댓글 내용만(string), 나중에는 다른 정보 포함해서 객체로 
     headers: { "Content-Type": "application/json" },
   });
@@ -65,10 +65,10 @@ export async function editComment({ musicId, commentId, commentInfo }) {
   return response;
 }
 
-export async function deleteComment({ musicId, commentId }) {
+export async function deleteComment({ commentId }) {
   const response = await axios({
     method: "delete",
-    url: `/api/music/comments/${musicId}/${commentId}`,
+    url: `/api/music/comments/${commentId}`,
     headers: { "Content-Type": "application/json" },
   });
   console.log(response);
