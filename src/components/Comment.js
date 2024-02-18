@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { deleteComment, editComment, queryClient } from "../util/http";
-import classes from "../comment.module.css";
+import classes from "./Comment.module.css";
 
 export function Comment({ commentId, text }) {
   const [isEditing, setIsEditing] = useState(false);
