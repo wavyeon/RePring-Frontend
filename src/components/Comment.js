@@ -2,8 +2,9 @@ import { useState } from "react";
 import { TextField } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { deleteComment, editComment, queryClient } from "../util/http";
+import classes from "../comment.module.css";
 
-export function Comment({ musicId, commentId, text }) {
+export function Comment({ commentId, context }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const {
@@ -38,7 +39,6 @@ export function Comment({ musicId, commentId, text }) {
     event.preventDefault();
     console.log(event.target[0].value);
     const response = mutateEditComment({
-      musicId: musicId,
       commentId: commentId,
       commentInfo: event.target[0].value, // 나중엔 객체로
     });
@@ -47,7 +47,7 @@ export function Comment({ musicId, commentId, text }) {
   };
 
   const deleteCommentHandler = () => { // handler 안거치고 onClick에 mutate 할당해보기
-    const response = mutateDeleteComment({ musicId, commentId });
+    const response = mutateDeleteComment({ commentId });
     console.log(response);
   };
 
@@ -56,7 +56,7 @@ export function Comment({ musicId, commentId, text }) {
     content = (
       <>
         <form onSubmit={completeCommentEditHandler}>
-          <input type="text" defaultValue={text} />
+          <input type="text" defaultValue={context} />
           <button type="submit">완료</button>
         </form>
       </>
@@ -64,7 +64,7 @@ export function Comment({ musicId, commentId, text }) {
   } else {
     content = (
       <>
-        {text}
+        {context}
         <button onClick={attemptCommentEditHandler}>수정</button>
         <button onClick={deleteCommentHandler}>삭제</button>
       </>
@@ -72,7 +72,7 @@ export function Comment({ musicId, commentId, text }) {
   }
   return (
     <>
-      <li key={commentId}>{content}</li>
+      <li className={classes.comment} key={commentId}>{content}</li>
     </>
   );
 }

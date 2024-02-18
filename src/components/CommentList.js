@@ -55,9 +55,8 @@ export function CommentList() {
     content = comments.map((comment) => {
       return (
         <Comment
-          musicId={params.musicId}
           commentId={comment.id}
-          text={comment.text}
+          context={comment.context}
           // onDelete={deleteCommentHandler.bind(null, params.musicId, comment.id)}
           // onDelete={() => deleteCommentHandler({musicId: params.musicId, commentId: comment.id})}
         />
