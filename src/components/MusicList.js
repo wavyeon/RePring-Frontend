@@ -4,33 +4,6 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllMusic } from "../util/http";
 
-// const dummy_music = [
-//   {
-//     title: "R.I.P",
-//     artist: "Kid Milli",
-//     id: 1,
-//     cover: "/img/beige.jpg",
-//   },
-//   {
-//     title: "요즘 같은 날",
-//     artist: "ZENE THE ZILLA",
-//     id: 2,
-//     cover: "/img/commondays.jpg",
-//   },
-//   {
-//     title: "NERD",
-//     artist: "B.I",
-//     id: 3,
-//     cover: "/img/nerd.jpg",
-//   },
-//   {
-//     title: "뭐",
-//     artist: "쿠기",
-//     id: 4,
-//     cover: "/img/what.jpg",
-//   },
-// ];
-
 export function MusicList() {
   const { data: musicList, isPending, isError, error } = useQuery({
     queryKey: ["musics"],
