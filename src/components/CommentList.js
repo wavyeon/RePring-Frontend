@@ -66,7 +66,7 @@ export function CommentList() {
 
   return (
     <div>
-      <ul>{content}</ul>
+      <ul className={classes["comment-list"]}>{content}</ul>
       <TextField
         // onClick={isLogin}
         onChange={inputChangeHandler}
