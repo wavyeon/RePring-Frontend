@@ -56,7 +56,7 @@ export function CommentList() {
       return (
         <Comment
           commentId={comment.id}
-          context={comment.context}
+          text={comment.content}
           // onDelete={deleteCommentHandler.bind(null, params.musicId, comment.id)}
           // onDelete={() => deleteCommentHandler({musicId: params.musicId, commentId: comment.id})}
         />

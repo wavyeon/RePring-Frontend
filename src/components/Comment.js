@@ -4,7 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteComment, editComment, queryClient } from "../util/http";
 import classes from "../comment.module.css";
 
-export function Comment({ commentId, context }) {
+export function Comment({ commentId, text }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const {
@@ -56,7 +56,7 @@ export function Comment({ commentId, context }) {
     content = (
       <>
         <form onSubmit={completeCommentEditHandler}>
-          <input type="text" defaultValue={context} />
+          <input type="text" defaultValue={text} />
           <button type="submit">완료</button>
         </form>
       </>
@@ -64,7 +64,7 @@ export function Comment({ commentId, context }) {
   } else {
     content = (
       <>
-        {context}
+        {content}
         <button onClick={attemptCommentEditHandler}>수정</button>
         <button onClick={deleteCommentHandler}>삭제</button>
       </>
